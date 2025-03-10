@@ -1,0 +1,27 @@
+@echo off
+cls
+
+:: Wyświetlenie dużego tekstu
+echo   ∧,,,∧   ~
+echo  (  ̳• · • ̳)   ~ ♡  wirusek   ♡
+echo /       づ  ~
+echo 
+echo UWAGA!
+echo Wirus usunie cały twój system! Czy jesteś pewny że chcesz to odpalić?
+echo.
+echo. 1 - Tak, jestem świadomy tego co robie
+echo. 2 = Jednak rezygnuje
+set /p input= 
+
+:: Sprawdzenie, czy użytkownik wpisał poprawne hasło
+if /i "%input%"=="POTWIERDZAM" (
+    echo.
+    echo ✅ Potwierdzono! Wykonuję akcję...
+    timeout /t 2 >nul
+    cls
+    echo ✅ Akcja została wykonana pomyślnie!
+) else (
+    echo ❌ Błędna odpowiedź! Skrypt zakończony.
+    timeout /t 3 >nul
+    exit
+)
